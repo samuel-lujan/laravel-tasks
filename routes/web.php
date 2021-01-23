@@ -18,3 +18,6 @@ Auth::routes();
 Route::get('/',         [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/home',     [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/tarefas',  [App\Http\Controllers\HomeController::class, 'tasks'])->name('tarefas');
+
+//Projetos
+Route::post('/salvar-projeto', [App\Http\Controllers\Projects::class, 'storeProject'])->name('store.project');

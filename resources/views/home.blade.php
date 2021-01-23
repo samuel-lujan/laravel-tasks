@@ -7,127 +7,29 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="card col-8">
-            <img src="imgs/logo.jpeg" alt="">
+    @if(auth()->user() && auth()->user()->tasks_complete==0 && count(auth()->user()->projects()->get())==0)
+        <div class="alert alert-success">
+            Crie seu primeiro projeto
         </div>
-        <div class="card col-4">
-            <div class="card-header">
-                <h3 class="card-title"><b>Exemplo</b></h3>
+    @endif 
+    <div class="card">
+        <div class="card-header bg-warning">
+            <h3 class="card-title"><b>Meus Projetos</b></h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-sm btn-success" data-toggle="modal" href="#addModal"><i class="fas fa-plus-circle"></i></button>
+                <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" href="#infoModal"><i class="fas fa-info-circle"></i></button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
             </div>
-            <div class="card-body">
-                    <div class="card">
-                        <div class="card-header bg-warning">
-                            <h3 class="card-title"><b>Tarefas de exemplo 1</b></h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="card-body" >
-                            <div class="">
-                                <div class="icheck-primary d-inline ml-2">
-                                    <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                    <label for="todoCheck1"></label>
-                                </div>
-                                <span class="text">Conheça <b>Mídia Simples Task Manager</b></span>
-                                <!-- Emphasis label -->
-                                <div class="tools">
-                                </div>   
-                            </div>
-                            <div class="">
-                                <div class="icheck-primary d-inline ml-2">
-                                    <input type="checkbox" value="" name="todo2" id="todoCheck2">
-                                    <label for="todoCheck2"></label>
-                                </div>
-                                <span class="text">Crie sua conta</span>
-                                <!-- Emphasis label -->
-                                <div class="tools">
-                                </div>   
-                            </div>
-                            <div class="">
-                                <div class="icheck-primary d-inline ml-2">
-                                    <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                                    <label for="todoCheck3"></label>
-                                </div>
-                                <span class="text">Comece a gerenciar suas Tarefas</span>
-                                <!-- Emphasis label -->
-                                <div class="tools">
-                                </div>   
-                            </div>    
-                        </div>
-                        <div class="card-footer">
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header bg-warning">
-                            <h3 class="card-title"><b>Tarefas de exemplo 2</b></h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="">
-                                <div class="icheck-primary d-inline ml-2">
-                                    <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                    <label for="todoCheck1"></label>
-                                </div>
-                                <span class="text">Seus objetivos rápido e fácil</span>
-                                <!-- Emphasis label -->
-                                <div class="tools">
-                                </div>   
-                            </div>
-                            <div class="">
-                                <div class="icheck-primary d-inline ml-2">
-                                    <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                                    <label for="todoCheck1"></label>
-                                </div>
-                                <span class="text">Crie e edite suas tarefas</span>
-                                <!-- Emphasis label -->
-                                <div class="tools">
-                                </div>   
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            
-                        </div>
-                    </div>
-            </div>
-            <div class="card-footer">
-            </div>
+        </div>
+        <div class="card-body">
+
+        </div>
+        <div class="card-footer bg-light">
+
         </div>
     </div>
-    @if(!auth()->user()) 
-        <div class="row">
-            <div class="col small-box bg-info">
-                <div class="inner">
-                    <h3>Login</h3>
-                    <br>
-                    <p></p>
-                </div>
-                <div class="icon">
-                <i class="fas fa-sign-in-alt"></i>
-                </div>
-                <a href="{{route('login')}}" class="small-box-footer">
-                entrar <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>    
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="col small-box bg-warning">
-                <div class="inner">
-                    <h3>Crie sua conta</h3>
-                    <br>
-                    <p> </p>
-                </div>
-                <div class="icon">
-                <i class="fas fa-user-plus"></i>
-                </div>
-                <a href="{{route('register')}}" class="small-box-footer">
-                    Registrar <i class="fas fa-arrow-circle-right"></i>
-                </a>
-            </div>
-        </div>
-    @endif  
-            
+    @include('includes.infoModalProjetos')
+    @include('includes.addModalProjetos')
 @stop
 
 @section('footer')
