@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+@section('title', 'Projetos')
 
 @section('content_header')
     <h1 class="m-0 text-dark">Mídia Simples Task Manager</h1>
@@ -23,36 +23,40 @@
         </div>
         <div class="card-body">
             @include('alerts')
-            <table id="bike" class="table table-hover dataTable" role="grid">
-                <thead align="center" class="sorting_asc bg-secondary">
-                    <th class="sorting_asc" colspan="1" aria-sort="ascending" aria-label="projetos">Projetos</th>
-                    <th>Data Limite</th>
-                    <!--<th>Processo</th>-->
-                    <th>Finalizado</th>
-                    <th>Ações</th>
-                </thead>
-                <tbody align="center">
-                    @foreach ($projetos as $projeto)
-                        <tr role="row" class="odd">
-                            <th>{{$projeto->project}}</th>
-                            <th>{{date('d/m/Y', strtotime($projeto->dead_line))}}</th>
-                            <!--<th>
+            @if(count(auth()->user()->projects()->get())>0)
+                <table id="bike" class="table table-hover dataTable" role="grid">
+                    <thead align="center" class="sorting_asc bg-secondary">
+                        <th class="sorting_asc" colspan="1" aria-sort="ascending" aria-label="projetos">Projetos</th>
+                        <th>Data Limite</th>
+                        <!--<th>Processo</th>-->
+                        <th>Finalizado</th>
+                        <th>Ações</th>
+                    </thead>
+                    <tbody align="center">
+                        @foreach ($projetos as $projeto)
+                            <tr role="row" class="odd">
+                                <th>{{$projeto->project}}</th>
+                                <th>{{date('d/m/Y', strtotime($projeto->dead_line))}}</th>
+                                <!--<th>
 
-                            </th>-->
-                            <th>
-                                @if($projeto->finished==0)
-                                    <input type="checkbox" name="finished" id="finished" onclick="return false;" disabled>
-                                @else
-                                    <input type="checkbox" name="finished" id="finished" onclick="return false;" disabled checked>
-                                @endif
-                            </th>
-                            <th>
-                                <a href="{{route('projects', ['projeto'=>$projeto->id])}}"><button type="button" class="btn btn-info btn-sm" onclick="getbike({{$projeto->id}})"><i class="fas fa-pen"></i> Abrir</button></a>
-                            </th>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                                </th>-->
+                                <th>
+                                    @if($projeto->finished==0)
+                                        <input type="checkbox" name="finished" id="finished" onclick="return false;" disabled>
+                                    @else
+                                        <input type="checkbox" name="finished" id="finished" onclick="return false;" disabled checked>
+                                    @endif
+                                </th>
+                                <th>
+                                    <a href="{{route('projects', ['projeto'=>$projeto->id])}}"><button type="button" class="btn btn-info btn-sm" onclick="getbike({{$projeto->id}})"><i class="fas fa-pen"></i> Abrir</button></a>
+                                </th>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            @else
+                <p>Adicione seu Primeiro Projeto</p>
+            @endif
         </div>
         <div class="card-footer bg-light">
 
