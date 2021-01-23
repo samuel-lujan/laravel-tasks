@@ -30,31 +30,55 @@
                 <li style="list-style: none;">                   
                     <div align="center">
                         <div class="icheck-primary d-inline ml-2">
-                            <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                            <input type="checkbox" value="" name="todo1" id="todoCheck1" data-toggle="modal" href="#addModal">
                             <label for="todoCheck1"></label>
                         </div>
                         <span class="text"><b>{{$tarefa->task}}</b></span>
-                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#edit" onclick=""><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#drop" onclick=""><i class="fas fa-trash-alt"></i></button>
-                            
-                            <i class="fas fa-trash-o"></i>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#desc" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
+                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#edit" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
+                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#drop" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 </li>
-                {{$tarefa}}
+                <br>
             @empty
                 <p align="center">Nenhuma tarefa pra Fazer</p>
             @endforelse
 
             <h3 class="bg-success" align="center"> Tarefas concluidas: </h3>
             @forelse ($projeto->tasks()->where('complete', 1)->get() as $tarefas)
-                {{$tarefas}}
+                <li style="list-style: none;">                   
+                    <div align="center">
+                        <div class="icheck-primary d-inline ml-2">
+                            <input type="checkbox" value="" name="todo1" id="todoCheck1" checked>
+                            <label for="todoCheck1"></label>
+                        </div>
+                        <span class="text"><b>{{$tarefa->task}}</b></span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#desc" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
+                    </div>
+                </li>
+                <br>
             @empty
                 <p align="center">Nenhuma tarefa Concluida</p>
             @endforelse
 
             <h3 class="bg-warning" align="center"> Tarefas para atrasadas: </h3>
             @forelse ($projeto->tasks()->where('dead_line', '<', date("Y-m-d"))->get() as $tarefas)
-                {{$tarefas}}
+            <li style="list-style: none;">                   
+                <div align="center">
+                    <div class="icheck-primary d-inline ml-2">
+                        <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                        <label for="todoCheck1"></label>
+                    </div>
+                    <span class="text"><b>{{$tarefa->task}}</b></span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#desc" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
+                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#edit" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#drop" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </li>
+            <br>
             @empty
                 <p align="center">Nenhuma tarefa atrasada</p>
             @endforelse
@@ -62,6 +86,7 @@
         <div class="card-footer"></div>    
     </div>    
     @include('includes.addModalTasks')
+    @include('includes.infoModalTasks')
 @stop
 
 @section('footer')
@@ -77,4 +102,12 @@
             <p class="text-center">Um projeto desenvolvido por Samuel Lujan<br>@Midia Simples - 2021</p>
         </div>
     </div>
+@stop
+
+@section('js')
+    <script>
+        function getTask(id){
+
+        }
+    </script>
 @stop

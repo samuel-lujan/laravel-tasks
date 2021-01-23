@@ -10,6 +10,9 @@ use \App\Models\task;
 
 class Projects extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
 
     public function project(Project $projeto){
         if($projeto->id_user == auth()->user()->id){
