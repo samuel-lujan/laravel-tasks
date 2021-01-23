@@ -96,6 +96,38 @@
             </div>
         </div>
     </div>
+            
+    <div class="row">
+        <div class="col small-box bg-info">
+            <div class="inner">
+                <h3>Login</h3>
+                <br>
+                <p></p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-sign-in-alt"></i>
+            </div>
+            <a href="{{route('login')}}" class="small-box-footer">
+              entrar <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>    
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="col small-box bg-warning">
+            <div class="inner">
+                <h3>Crie sua conta</h3>
+                <br>
+                <p> </p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-user-plus"></i>
+            </div>
+            <a href="{{route('register')}}" class="small-box-footer">
+                Registrar <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+                
+            
 @stop
 
 @section('footer')
