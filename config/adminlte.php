@@ -231,8 +231,8 @@ return [
             'icon'  => 'fas fa-home',
         ],
         [
-            'text'        => 'tarefas',
-            'route'       => 'tarefas',
+            'text'        => 'Projetos',
+            'route'       => 'projetos',
             'icon'        => 'fas fa-tasks',
         ],
     ],

@@ -14,7 +14,7 @@ class HomeController extends Controller
         return view('welcome');
     }
 
-    public function tasks(){
-        return view('home');
+    public function projetos(){
+        return view('home', ['projetos'=>auth()->user()->projects()->get()]);
     }
 }

@@ -17,7 +17,8 @@ Auth::routes();
 
 Route::get('/',         [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/home',     [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/tarefas',  [App\Http\Controllers\HomeController::class, 'tasks'])->name('tarefas');
+Route::get('/projetos',  [App\Http\Controllers\HomeController::class, 'projetos'])->name('projetos');
 
 //Projetos
-Route::post('/salvar-projeto', [App\Http\Controllers\Projects::class, 'storeProject'])->name('store.project');
+    Route::post('/salvar-projeto',   [App\Http\Controllers\Projects::class, 'storeProject'])->name('store.project');
+    Route::get('/projeto/{projeto}', [App\Http\Controllers\Projects::class, 'project'])->name('projects');
