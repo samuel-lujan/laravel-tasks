@@ -17,6 +17,7 @@
                 <b>Tarefas do Projeto:</b> {{$projeto->project}}
             </h3>
             <div class="card-tools">
+                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#checkAll"><i class="fas fa-check"></i></button>
                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal" href="#addModal"><i class="fas fa-plus-circle"></i></button>
                 <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" href="#infoModal"><i class="fas fa-info-circle"></i></button>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
@@ -25,7 +26,7 @@
         <div class="card-body">
             @include('alerts')
             <h3 class="bg-info" align="center"> Tarefas para fazer: </h3>
-            @forelse ($projeto->tasks()->where('complete', 0)->where('dead_line', '>=', date("Y-m-d"))->orWhere('dead_line', null)->get() as $tarefa) 
+            @forelse ($projeto->tasks()->where('complete', 0)->where('dead_line', '>=', date("Y-m-d"))->orWhere('dead_line', null)->where('complete', 0)->get() as $tarefa) 
                 <li style="list-style: none;">                   
                     <div align="center">
                         <div class="icheck-primary d-inline ml-2">
@@ -90,6 +91,7 @@
     @include('includes.Tasks.editModalTasks')
     @include('includes.Tasks.infoModalTask')
     @include('includes.Tasks.deleteModalTask')
+    @include('includes.Tasks.checkAllModal')
 @stop
 
 @section('footer')

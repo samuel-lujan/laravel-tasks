@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use \App\Models\Project;
 use \App\Models\task;
-
+use DB;
 
 class Projects extends Controller
 {
@@ -22,6 +22,15 @@ class Projects extends Controller
         }
         else{
             return redirect()->back()->with('error', 'Não é possível acessar esse projeto');
+        }
+    }
+
+    public function checkAll(project $projeto){
+        $atualizar = DB::table('tasks')->where('id_project', $projeto->id)->update(['complete' => 1, 'finished_at'=> date('Y-m-d')]);
+        if($atualizar){
+            return redirect()->back()->with('success', 'Todas as tarefas foram atualizadas');
+        }else{
+            return redirect()->back()->with('error', 'Houve um erro ao atualizar todas as tarefas');
         }
     }
 
