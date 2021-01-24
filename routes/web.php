@@ -23,4 +23,7 @@ Route::get('/projetos',  [App\Http\Controllers\HomeController::class, 'projetos'
     Route::post('/salvar-projeto',             [App\Http\Controllers\Projects::class, 'storeProject'])->name('store.project');
     Route::post('/salvar-tarefa/{projeto}',    [App\Http\Controllers\Projects::class, 'storeTask'])->name('store.task');
     Route::get('/projeto/{projeto}',           [App\Http\Controllers\Projects::class, 'project'])->name('projects');
-    
+
+//Tasks
+    Route::get('/buscar-tarefa/{tarefa}',      [App\Http\Controllers\Projects::class, 'getTask'])->name('get.task');
+    Route::put('/marcar-como-feito/{tarefa}',  [App\Http\Controllers\Projects::class, 'changeStatus'])->name('change.status.task');

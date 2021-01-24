@@ -26,12 +26,12 @@
             @include('alerts')
             <h3 class="bg-info" align="center"> Tarefas para fazer: </h3>
 
-            @forelse ($projeto->tasks()->where('complete', 0)->get() as $tarefa) 
+            @forelse ($projeto->tasks()->where('complete', 0)->where('dead_line', '>=', date("Y-m-d"))->get() as $tarefa) 
                 <li style="list-style: none;">                   
                     <div align="center">
                         <div class="icheck-primary d-inline ml-2">
-                            <input type="checkbox" value="" name="todo1" id="todoCheck1" data-toggle="modal" href="#addModal">
-                            <label for="todoCheck1"></label>
+                            <input type="checkbox" value="" name="todo1" id="checkbox_{{$tarefa->id}}" data-toggle="modal" href="#changeStatus" onclick="buildChangeStatus({{$tarefa->id}})">
+                            <label for="checkbox_{{$tarefa->id}}"></label>
                         </div>
                         <span class="text"><b>{{$tarefa->task}}</b></span>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -45,31 +45,13 @@
                 <p align="center">Nenhuma tarefa pra Fazer</p>
             @endforelse
 
-            <h3 class="bg-success" align="center"> Tarefas concluidas: </h3>
-            @forelse ($projeto->tasks()->where('complete', 1)->get() as $tarefas)
-                <li style="list-style: none;">                   
-                    <div align="center">
-                        <div class="icheck-primary d-inline ml-2">
-                            <input type="checkbox" value="" name="todo1" id="todoCheck1" checked>
-                            <label for="todoCheck1"></label>
-                        </div>
-                        <span class="text"><b>{{$tarefa->task}}</b></span>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#desc" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
-                    </div>
-                </li>
-                <br>
-            @empty
-                <p align="center">Nenhuma tarefa Concluida</p>
-            @endforelse
-
-            <h3 class="bg-warning" align="center"> Tarefas para atrasadas: </h3>
-            @forelse ($projeto->tasks()->where('dead_line', '<', date("Y-m-d"))->get() as $tarefas)
+            <h3 class="bg-warning" align="center"> Tarefas atrasadas: </h3>
+            @forelse ($projeto->tasks()->where('dead_line', '<', date("Y-m-d"))->where('complete', 0)->get() as $tarefa)
             <li style="list-style: none;">                   
                 <div align="center">
                     <div class="icheck-primary d-inline ml-2">
-                        <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                        <label for="todoCheck1"></label>
+                        <input type="checkbox" value="" name="todo1" id="checkbox_{{$tarefa->id}}"  data-toggle="modal" href="#changeStatus" onclick="buildChangeStatus({{$tarefa->id}})" >
+                        <label for="checkbox_{{$tarefa->id}}"></label>
                     </div>
                     <span class="text"><b>{{$tarefa->task}}</b></span>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -82,11 +64,30 @@
             @empty
                 <p align="center">Nenhuma tarefa atrasada</p>
             @endforelse
+
+            <h3 class="bg-success" align="center"> Tarefas concluidas: </h3>
+            @forelse ($projeto->tasks()->where('complete', 1)->get() as $tarefa)
+                <li style="list-style: none;">                   
+                    <div align="center">
+                        <div class="icheck-primary d-inline ml-2">
+                            <input type="checkbox" value="" name="todo1" id="checkbox_{{$tarefa->id}}" checked onclick="return null;" disabled>
+                            <label for="checkbox_{{$tarefa->id}}"></label>
+                        </div>
+                        <span class="text"><b>{{$tarefa->task}}</b></span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#desc" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
+                    </div>
+                </li>
+                <br>
+            @empty
+                <p align="center">Nenhuma tarefa Concluida</p>
+            @endforelse
         </div>
         <div class="card-footer"></div>    
     </div>    
     @include('includes.addModalTasks')
     @include('includes.infoModalTasks')
+    @include('includes.chageStatusModal')
 @stop
 
 @section('footer')
@@ -105,6 +106,26 @@
 @stop
 
 @section('js')
+
+    <script>
+        function buildChangeStatus(id){
+            $( "#checkbox_"+id).prop('checked', false);
+            var route = "{{route('get.task', ['tarefa' =>0])}}";
+            route = route.replace('0', id);
+            var route_form = "{{route('change.status.task', ['tarefa' => 0])}}";
+            route_form = route_form.replace('0', id);
+            $.get(
+                route,
+                {
+
+                },
+                function(c){
+                    $("#form_change_status").attr('action', route_form);
+                }
+            );
+            return null;
+        }
+    </script>
     <script>
         function getTask(id){
 

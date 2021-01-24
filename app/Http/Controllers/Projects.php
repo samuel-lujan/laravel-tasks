@@ -61,4 +61,26 @@ class Projects extends Controller
             return redirect()->back()->with('error', 'Falha ao cadastrar tarefa');
         }
     }
+
+    public function getTask(Task $tarefa){
+        if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
+            return $tarefa;
+        }else{
+            return false;
+        }
+    }
+    
+    public function changeStatus(Task $tarefa){
+        if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
+            $tarefa->complete = true;
+            $tarefa->finished_at = date('Y-m-d'); 
+            if($tarefa->save()){
+                return redirect()->back()->with('success', 'Tarefa concluida com sucesso!');
+            }else{
+                return redirect()->back()->with('error', 'Houve um erro ao atualizar status da tarefa');
+            }
+        }else{
+            return redirect()->back()->with('error', 'O acesso a essa tarefa foi negado');
+        }
+    }
 }

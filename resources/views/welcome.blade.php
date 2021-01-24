@@ -107,7 +107,7 @@
                 <div class="icon">
                 <i class="fas fa-sign-in-alt"></i>
                 </div>
-                <a href="{{route('tarefas')}}" class="small-box-footer">
+                <a href="{{route('projetos')}}" class="small-box-footer">
                 entrar <i class="fas fa-arrow-circle-right"></i>
                 </a>
             </div>    
