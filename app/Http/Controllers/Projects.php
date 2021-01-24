@@ -15,7 +15,7 @@ class Projects extends Controller
         $this->middleware('auth');
     }
 
-    //Retorna a index dos projetos
+    //Retorna a index do projeto
     public function project(Project $projeto){
         if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get())){  //CASO TODAS AS TAREFAS TENHAM SIDO CUMPRIDAS
             $projeto->finished =  1;
@@ -30,6 +30,7 @@ class Projects extends Controller
         }
     }
 
+    //Retorna informações do projeto
     public function getProject(Project $projeto){
         if(auth()->user()->id == $projeto->id_user){
             return $projeto;
@@ -38,6 +39,7 @@ class Projects extends Controller
         }
     }
     
+    //Atualiza informações do projeto
     public function updateProjeto(Project $projeto, Request $request){
         if($projeto->id_user != auth()->user()->id){
             return redirect()->back()->with('error', 'Permissão para deletar projeto Negada');
@@ -55,6 +57,7 @@ class Projects extends Controller
         }
     }
 
+    //Deleta o Projeto
     public function deleteProjeto(Project $projeto){
         if($projeto->id_user != auth()->user()->id){
             return redirect()->back()->with('error', 'Permissão para deletar projeto Negada');
@@ -92,7 +95,7 @@ class Projects extends Controller
 
 
 
-    //
+    //Salva a tarefa na base de dados
     public function storeTask(Project $projeto, Request $request){
         if($request->task == null || $request->task == "" || $request->task == " "){
             return redirect()->back()->with('error', 'Insira um nome válido para a tarefa');
@@ -118,6 +121,7 @@ class Projects extends Controller
         }
     }
 
+    //Retorna informações da tarefa
     public function getTask(Task $tarefa){
         if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
             return $tarefa;
@@ -126,6 +130,7 @@ class Projects extends Controller
         }
     }
     
+    //Set todas as tarefas como feita
     public function checkAll(project $projeto){
         $atualizar = DB::table('tasks')->where('id_project', $projeto->id)->update(['complete' => 1, 'finished_at'=> date('Y-m-d')]);
         if($atualizar){
@@ -138,6 +143,7 @@ class Projects extends Controller
         }
     }
 
+    //Set status da tarefa como feita
     public function changeStatus(Task $tarefa){
         if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
             $tarefa->complete = true;
@@ -159,6 +165,7 @@ class Projects extends Controller
         }
     }
 
+    //Atualiza informações da tarefa
     public function updateTask(Task $tarefa, Request $request){
         if($request->task == null || $request->task == "" || $request->task == " "){
             return redirect()->back()->with('error', 'Insira um nome válido para a tarefa');
@@ -180,6 +187,7 @@ class Projects extends Controller
         }
     }
 
+    //Apaga Tarefa
     public function dropTask(Task $tarefa){
         if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
             if($tarefa->delete()){
