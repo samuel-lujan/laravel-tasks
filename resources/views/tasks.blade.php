@@ -17,7 +17,9 @@
                 <b>Tarefas do Projeto:</b> {{$projeto->project}}
             </h3>
             <div class="card-tools">
-                <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#checkAll"><i class="fas fa-check"></i></button>
+                @if(count($projeto->tasks()->get())>0)
+                    <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#checkAll"><i class="fas fa-check"></i></button>
+                @endif
                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal" href="#addModal"><i class="fas fa-plus-circle"></i></button>
                 <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" href="#infoModal"><i class="fas fa-info-circle"></i></button>
                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>

@@ -13,7 +13,7 @@
         </div>
     @endif 
     <div class="card">
-        <div class="card-header bg-warning">
+        <div class="card-header bg-info">
             <h3 class="card-title"><b>Meus Projetos</b></h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-sm btn-success" data-toggle="modal" href="#addModal"><i class="fas fa-plus-circle"></i></button>
@@ -28,7 +28,7 @@
                     <div class="panel-group" id="accordion">
                         <div class="panel panel-default" >
                             <div class="panel-heading 
-                            @if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get()))
+                            @if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get()) && count($projeto->tasks()->get()) != 0)
                                 bg-success
                             @else
                                 bg-warning
@@ -36,10 +36,10 @@
                             ">
                                 <a style="color: black; bold -webkit-text-stroke: 0.5px whitesmoke;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$loop->index}}">
                                     <p class="panel-title" style="padding: 5px"> <b style="font-size: 20px">{{$projeto->project}}</b> &nbsp;&nbsp;&nbsp;
-                                        @if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get()))
+                                        @if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get()) && count($projeto->tasks()->get()) != 0)
                                             Finalizdo
                                         @else
-                                            Em aberto
+                                            Em Andamento
                                         @endif
                                     </p> 
                                 </a>
