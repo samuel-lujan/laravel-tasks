@@ -34,6 +34,9 @@ class Projects extends Controller
     }
     
     public function updateProjeto(Project $projeto, Request $request){
+        if($projeto->id_user != auth()->user()->id){
+            return redirect()->back()->with('error', 'Permissão para deletar projeto Negada');
+        }
         if($request->projeto == null || $request->projeto == "" || $request->projeto == " "){
             return redirect()->back()->with('error', 'Insira um nome válido para o projeto');
         }
@@ -44,6 +47,17 @@ class Projects extends Controller
             return redirect()->back()->with('success', 'Projeto atualizado com sucesso');
         }else{
             return redirect()->back()->with('error', 'Falha ao atualizar projeto');
+        }
+    }
+
+    public function deleteProjeto(Project $projeto){
+        if($projeto->id_user != auth()->user()->id){
+            return redirect()->back()->with('error', 'Permissão para deletar projeto Negada');
+        }
+        if($projeto->delete()){
+            return redirect()->back()->with('success', 'Projeto excluido com sucesso');
+        }else{
+            return redirect()->back()->with('error', 'Falha ao excluir projeto');
         }
     }
 
