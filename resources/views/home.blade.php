@@ -49,7 +49,7 @@
                                     <a href="{{route('projects', ['projeto'=>$projeto->id])}}" class="float-right"><button type="button" class="btn btn-info btn-sm" onclick="getbike({{$projeto->id}})"><i class="fas fa-angle-right"></i> Abrir</button></a>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
                                     <button type="button" class="btn btn-sm btn-warning float-right"  data-toggle="modal" href="#editModal" onclick="getProject({{$projeto->id}})"><i class="fas fa-edit"></i>Editar</button>
-                                    <button type="button" class="btn btn-sm btn-danger float-right"   data-toggle="modal" href="#editModal" onclick="getProject({{$projeto->id}})">  <i class="fas fa-trash-alt"></i>Apagar</button>
+                                    <button type="button" class="btn btn-sm btn-danger float-right"   data-toggle="modal" href="#dropProject" onclick="getProject({{$projeto->id}})">  <i class="fas fa-trash-alt"></i>Apagar</button>
                                     <br>
                                     <div class="container">
                                         <div class="row">
@@ -89,6 +89,7 @@
     @include('includes.Projects.infoModalProjetos')
     @include('includes.Projects.addModalProjetos')
     @include('includes.Projects.editModalProjetos')
+    @include('includes.Projects.deleteModalProjetos')
 @stop
 
 @section('footer')
@@ -113,6 +114,8 @@
             route = route.replace('0', id);
             var route_form_edit = "{{route('update.project', ['projeto'=> 0])}}";
             route_form_edit = route_form_edit.replace('0', id);
+            var route_form_delete = "{{route('delete.project',['projeto'=>0])}}";
+            route_form_delete = route_form_delete.replace('0', id);
             $.get(
                 route,
                 {
@@ -126,7 +129,10 @@
                             $('#edit_projeto').val(c.project);
                             $('#edit_description').val(c.description);
                             $("#edit_dead_line").val(c.dead_line);
+                        //Valores no modal de deletar projeto
+                            $('#form_delete').attr('action', route_form_delete);
                     }
+
                 }   
             );
         }

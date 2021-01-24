@@ -17,6 +17,11 @@ class Projects extends Controller
 
     //Retorna a index dos projetos
     public function project(Project $projeto){
+        if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get())){  //CASO TODAS AS TAREFAS TENHAM SIDO CUMPRIDAS
+            $projeto->finished =  1;
+            $projeto->finished_at = date('Y-m-d');
+            $projeto->save();
+        }
         if($projeto->id_user == auth()->user()->id){
             return view('tasks', ['projeto'=>$projeto]);
         }
@@ -85,14 +90,6 @@ class Projects extends Controller
         }
     }
 
-    public function checkAll(project $projeto){
-        $atualizar = DB::table('tasks')->where('id_project', $projeto->id)->update(['complete' => 1, 'finished_at'=> date('Y-m-d')]);
-        if($atualizar){
-            return redirect()->back()->with('success', 'Todas as tarefas foram atualizadas');
-        }else{
-            return redirect()->back()->with('error', 'Houve um erro ao atualizar todas as tarefas');
-        }
-    }
 
 
     //
@@ -129,10 +126,29 @@ class Projects extends Controller
         }
     }
     
+    public function checkAll(project $projeto){
+        $atualizar = DB::table('tasks')->where('id_project', $projeto->id)->update(['complete' => 1, 'finished_at'=> date('Y-m-d')]);
+        if($atualizar){
+            $projeto->finished =  1;
+            $projeto->finished_at = date('Y-m-d');
+            $projeto->save();
+            return redirect()->back()->with('success', 'Todas as tarefas foram atualizadas');
+        }else{
+            return redirect()->back()->with('error', 'Houve um erro ao atualizar todas as tarefas');
+        }
+    }
+
     public function changeStatus(Task $tarefa){
         if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
             $tarefa->complete = true;
             $tarefa->finished_at = date('Y-m-d'); 
+            $projeto = Project::where('id', $tarefa->id_project)->first();
+            if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get())){  //CASO TODAS AS TAREFAS TENHAM SIDO CUMPRIDAS
+                $projeto->finished =  1;
+                $projeto->finished_at = date('Y-m-d');
+                $projeto->save();
+            }
+
             if($tarefa->save()){
                 return redirect()->back()->with('success', 'Tarefa concluida com sucesso!');
             }else{

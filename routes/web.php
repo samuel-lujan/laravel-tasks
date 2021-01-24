@@ -25,6 +25,7 @@ Route::get('/projetos',  [App\Http\Controllers\HomeController::class, 'projetos'
     Route::get('/projeto/{projeto}',           [App\Http\Controllers\Projects::class, 'project'])->name('projects');
     Route::get('/getProjeto/{projeto}',        [App\Http\Controllers\Projects::class, 'getProject'])->name('get.project');
     Route::put('/updateProjeto/{projeto}',     [App\Http\Controllers\Projects::class, 'updateProjeto'])->name('update.project');
+    Route::DELETE('apagar-projeto/{projeto}',  [App\Http\Controllers\Projects::class, 'deleteProjeto'])->name('delete.project');
 
 //Tasks
     Route::put('/fazer-todas/{projeto}',       [App\Http\Controllers\Projects::class, 'checkAll'])->name('check.all');
