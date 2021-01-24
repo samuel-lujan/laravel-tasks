@@ -36,7 +36,7 @@
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#taskModal" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
                             <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#editModal" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
-                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#drop" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
+                            <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#dropTask" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 </li>
                 <br>
@@ -56,7 +56,7 @@
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#taskModal" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
                         <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#editModal" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#drop" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
+                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#dropTask" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </li>
             <br>
@@ -89,6 +89,7 @@
     @include('includes.Tasks.chageStatusModal')
     @include('includes.Tasks.editModalTasks')
     @include('includes.Tasks.infoModalTask')
+    @include('includes.Tasks.deleteModalTask')
 @stop
 
 @section('footer')
@@ -131,9 +132,10 @@
         function getTask(id){
             var route = "{{route('get.task', ['tarefa' =>0])}}";
             route = route.replace('0', id);
-            var route_form = "{{route('update.task', ['tarefa' => 0])}}";
-            route_form = route_form.replace('0', id);
-
+            var route_form_edit = "{{route('update.task', ['tarefa' => 0])}}";
+            route_form_edit = route_form_edit.replace('0', id);
+            var route_form_delete = "{{route('delete.task', ['tarefa' => 0])}}";
+            route_form_delete = route_form_delete.replace('0', id);
             $.get(
                 route, 
                 {
@@ -143,7 +145,7 @@
                     if(c != false){
                         console.log(c);
                         //Modal de edição da tarefa
-                            $("#edit_modal").attr('action', route_form);
+                            $("#edit_modal").attr('action', route_form_edit);
                             $('#edit_task').val(c.task);
                             $('#edit_description').val(c.description);
                             $('#edit_dead_line').val(c.dead_line);
@@ -151,6 +153,8 @@
                             $("#info_task").html("<b>Tarefa: </b>&nbsp;"+c.task);
                             $('#info_dead_line').html("<b>Data Limite:</b>&nbsp;"+c.dead_line);
                             $('#info_description').html('<b>Descrição:</b> &nbsp;'+c.description);
+                        //Modal de deleção de tarefa
+                            $("#form_delete_task").attr('action', route_form_delete);
                     }
                 }
             );

@@ -44,6 +44,12 @@ class Projects extends Controller
     }
 
     public function storeTask(Project $projeto, Request $request){
+        if($request->task == null || $request->task == "" || $request->task == " "){
+            return redirect()->back()->with('error', 'Insira um nome válido para a tarefa');
+        }
+        if($request->description == null || $request->description == '' || $request->description == " "){
+            return redirect()->back()->with('error', 'A descrição da tarefa é obrigatória');
+        }
         if($projeto->id_user != auth()->user()->id){
             return redirect()->back()->with('error', 'Só é possível adicionar tarefas em seus projetos');
         }
@@ -85,6 +91,12 @@ class Projects extends Controller
     }
 
     public function updateTask(Task $tarefa, Request $request){
+        if($request->task == null || $request->task == "" || $request->task == " "){
+            return redirect()->back()->with('error', 'Insira um nome válido para a tarefa');
+        }
+        if($request->description == null || $request->description == '' || $request->description == " "){
+            return redirect()->back()->with('error', 'A descrição da tarefa é obrigatória');
+        }
         if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
             $tarefa->task = $request->task;
             $tarefa->description =  $request->description;
@@ -96,6 +108,18 @@ class Projects extends Controller
             }
         }else{
             return redirect()->back()->with('error', 'O acesso a essa tarefa foi negado');
+        }
+    }
+
+    public function dropTask(Task $tarefa){
+        if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
+            if($tarefa->delete()){
+                return redirect()->back()->with('success', 'Tarefa Apagada com sucesso!');
+            }else{
+                return redirect()->back()->with('error', 'Falha ao apagar a tarefa');
+            }
+        }else{
+            return false;
         }
     }
 }
