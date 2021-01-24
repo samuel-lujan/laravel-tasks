@@ -147,7 +147,6 @@
                 },
                 function(c){
                     if(c != false){
-                        console.log(c);
                         //Modal de edição da tarefa
                             $("#edit_modal").attr('action', route_form_edit);
                             $('#edit_task').val(c.task);

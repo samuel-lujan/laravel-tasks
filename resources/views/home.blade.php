@@ -122,7 +122,6 @@
 
                 },
                 function(c){
-                    console.log(c);
                     if(c != false){
                         //Valores no modal de edição de projeto
                             $('#form_edit').attr('action', route_form_edit);
