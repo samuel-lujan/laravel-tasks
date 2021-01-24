@@ -25,7 +25,6 @@
         <div class="card-body">
             @include('alerts')
             <h3 class="bg-info" align="center"> Tarefas para fazer: </h3>
-
             @forelse ($projeto->tasks()->where('complete', 0)->where('dead_line', '>=', date("Y-m-d"))->get() as $tarefa) 
                 <li style="list-style: none;">                   
                     <div align="center">
@@ -85,9 +84,9 @@
         </div>
         <div class="card-footer"></div>    
     </div>    
-    @include('includes.addModalTasks')
-    @include('includes.infoModalTasks')
-    @include('includes.chageStatusModal')
+    @include('includes.Tasks.addModalTasks')
+    @include('includes.Tasks.infoModalTasks')
+    @include('includes.Tasks.chageStatusModal')
 @stop
 
 @section('footer')
