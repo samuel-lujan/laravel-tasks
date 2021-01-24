@@ -151,10 +151,29 @@
                             $('#edit_dead_line').val(c.dead_line);
                         //Modal de informações da tarefa
                             $("#info_task").html("<b>Tarefa: </b>&nbsp;"+c.task);
+                            var d = new Date(c.created_at),
+                                month = '' + (d.getMonth() + 1),
+                                day = '' + d.getDate(),
+                                year = d.getFullYear();
+
+                            if (month.length < 2) 
+                                month = '0' + month;
+                            if (day.length < 2) 
+                                day = '0' + day;                            
+                            $('#info_creation').html('<b>Data de Criação:</b>&nbsp;'+[day, month, year].join('/'));
                             if(c.dead_line==null){
                                 $('#info_dead_line').html("<b>Data Limite:</b>&nbsp;Não cadastrado");
                             }else{
-                                $('#info_dead_line').html("<b>Data Limite:</b>&nbsp;"+c.dead_line);
+                                var d = new Date(c.dead_line),
+                                month = '' + (d.getMonth() + 1),
+                                day = '' + d.getDate(),
+                                year = d.getFullYear();
+
+                            if (month.length < 2) 
+                                month = '0' + month;
+                            if (day.length < 2) 
+                                day = '0' + day;     
+                                $('#info_dead_line').html('<b>Data de Criação:</b>&nbsp;'+[day, month, year].join('/'));
                             }
                             $('#info_description').html('<b>Descrição:</b> &nbsp;'+c.description);
                         //Modal de deleção de tarefa

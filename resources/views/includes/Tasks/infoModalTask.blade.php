@@ -9,6 +9,7 @@
         </div>
         <div class="modal-body">
             <p id="info_task"><b>Tarefa: </b>&nbsp;</p>
+            <p id="info_creation"><b>Data de Criação:</b>&nbsp;</p>
             <p id="info_dead_line"><b>Data Limite:</b>&nbsp;</p>
             <p id="info_description"><b>Descrição:</b> &nbsp;</p>
         </div>

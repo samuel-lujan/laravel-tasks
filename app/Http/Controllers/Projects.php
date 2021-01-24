@@ -10,10 +10,12 @@ use \App\Models\task;
 
 class Projects extends Controller
 {
+    //REQUER QUE O USUÁRIO ESTEJA LOGADO!
     public function __construct(){
         $this->middleware('auth');
     }
 
+    //Retorna a index dos projetos
     public function project(Project $projeto){
         if($projeto->id_user == auth()->user()->id){
             return view('tasks', ['projeto'=>$projeto]);
@@ -23,7 +25,11 @@ class Projects extends Controller
         }
     }
 
+    //Salva o projeto na base de dados
     public function storeProject(Request $request){
+        if($request->projeto == null || $request->projeto == "" || $request->projeto == " "){
+            return redirect()->back()->with('error', 'Insira um nome válido para o projeto');
+        }
         if(auth()->user()){
             auth()->user()->projects()->create([
                 'project'       => $request->projeto, 
@@ -43,6 +49,7 @@ class Projects extends Controller
         }
     }
 
+    //
     public function storeTask(Project $projeto, Request $request){
         if($request->task == null || $request->task == "" || $request->task == " "){
             return redirect()->back()->with('error', 'Insira um nome válido para a tarefa');
