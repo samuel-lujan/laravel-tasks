@@ -22,7 +22,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Entendi</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">fechar</button>
                 <button type="submit" class="btn btn-success">Cadastrar</button>
             </div>
         </form>

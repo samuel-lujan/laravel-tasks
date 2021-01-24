@@ -25,12 +25,25 @@ class Projects extends Controller
         }
     }
 
-    public function checkAll(project $projeto){
-        $atualizar = DB::table('tasks')->where('id_project', $projeto->id)->update(['complete' => 1, 'finished_at'=> date('Y-m-d')]);
-        if($atualizar){
-            return redirect()->back()->with('success', 'Todas as tarefas foram atualizadas');
+    public function getProject(Project $projeto){
+        if(auth()->user()->id == $projeto->id_user){
+            return $projeto;
         }else{
-            return redirect()->back()->with('error', 'Houve um erro ao atualizar todas as tarefas');
+            return false;
+        }
+    }
+    
+    public function updateProjeto(Project $projeto, Request $request){
+        if($request->projeto == null || $request->projeto == "" || $request->projeto == " "){
+            return redirect()->back()->with('error', 'Insira um nome válido para o projeto');
+        }
+        $projeto->project = $request->projeto;
+        $projeto->description = $request->description;
+        $projeto->dead_line = $request->dead_line;
+        if($projeto->save()){
+            return redirect()->back()->with('success', 'Projeto atualizado com sucesso');
+        }else{
+            return redirect()->back()->with('error', 'Falha ao atualizar projeto');
         }
     }
 
@@ -57,6 +70,16 @@ class Projects extends Controller
             return redirect()->back()->with('error', 'Para criar um projeto é necessário estar logado');
         }
     }
+
+    public function checkAll(project $projeto){
+        $atualizar = DB::table('tasks')->where('id_project', $projeto->id)->update(['complete' => 1, 'finished_at'=> date('Y-m-d')]);
+        if($atualizar){
+            return redirect()->back()->with('success', 'Todas as tarefas foram atualizadas');
+        }else{
+            return redirect()->back()->with('error', 'Houve um erro ao atualizar todas as tarefas');
+        }
+    }
+
 
     //
     public function storeTask(Project $projeto, Request $request){

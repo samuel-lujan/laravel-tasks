@@ -23,6 +23,8 @@ Route::get('/projetos',  [App\Http\Controllers\HomeController::class, 'projetos'
     Route::post('/salvar-projeto',             [App\Http\Controllers\Projects::class, 'storeProject'])->name('store.project');
     Route::post('/salvar-tarefa/{projeto}',    [App\Http\Controllers\Projects::class, 'storeTask'])->name('store.task');
     Route::get('/projeto/{projeto}',           [App\Http\Controllers\Projects::class, 'project'])->name('projects');
+    Route::get('/getProjeto/{projeto}',        [App\Http\Controllers\Projects::class, 'getProject'])->name('get.project');
+    Route::put('/updateProjeto/{projeto}',     [App\Http\Controllers\Projects::class, 'updateProjeto'])->name('update.project');
 
 //Tasks
     Route::put('/fazer-todas/{projeto}',       [App\Http\Controllers\Projects::class, 'checkAll'])->name('check.all');
