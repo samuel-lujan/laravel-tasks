@@ -26,4 +26,5 @@ Route::get('/projetos',  [App\Http\Controllers\HomeController::class, 'projetos'
 
 //Tasks
     Route::get('/buscar-tarefa/{tarefa}',      [App\Http\Controllers\Projects::class, 'getTask'])->name('get.task');
+    Route::put('/atualizar-tarefa/{tarefa}',   [App\Http\Controllers\Projects::class, 'updateTask'])->name('update.task');
     Route::put('/marcar-como-feito/{tarefa}',  [App\Http\Controllers\Projects::class, 'changeStatus'])->name('change.status.task');

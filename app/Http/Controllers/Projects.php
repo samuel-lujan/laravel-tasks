@@ -83,4 +83,19 @@ class Projects extends Controller
             return redirect()->back()->with('error', 'O acesso a essa tarefa foi negado');
         }
     }
+
+    public function updateTask(Task $tarefa, Request $request){
+        if(count(auth()->user()->projects()->where('id', $tarefa->id_project)->get())>=0){
+            $tarefa->task = $request->task;
+            $tarefa->description =  $request->description;
+            $tarefa->dead_line = $request->dead_line;
+            if($tarefa->save()){
+                return redirect()->back()->with('success', 'Tarefa atualizada com sucesso');
+            }else{
+                return redirect()->back()->with('error', 'Falha ao atualizar a tarefa');
+            }
+        }else{
+            return redirect()->back()->with('error', 'O acesso a essa tarefa foi negado');
+        }
+    }
 }

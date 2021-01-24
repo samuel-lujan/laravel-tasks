@@ -35,7 +35,7 @@
                         <span class="text"><b>{{$tarefa->task}}</b></span>
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#desc" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
-                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#edit" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
+                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#editModal" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
                             <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#drop" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
                     </div>
                 </li>
@@ -55,7 +55,7 @@
                     <span class="text"><b>{{$tarefa->task}}</b></span>
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <button type="button" class="btn btn-sm btn-info" data-toggle="modal" href="#desc" onclick="getTask({{$tarefa->id}})"><i class="fas fa-info-circle"></i></button>
-                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#edit" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" href="#editModal" onclick="getTask({{$tarefa->id}})"><i class="fas fa-edit"></i></button>
                         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" href="#drop" onclick="getTask({{$tarefa->id}})"><i class="fas fa-trash-alt"></i></button>
                 </div>
             </li>
@@ -87,6 +87,8 @@
     @include('includes.Tasks.addModalTasks')
     @include('includes.Tasks.infoModalTasks')
     @include('includes.Tasks.chageStatusModal')
+    @include('includes.Tasks.editModalTasks')
+
 @stop
 
 @section('footer')
@@ -127,7 +129,27 @@
     </script>
     <script>
         function getTask(id){
+            var route = "{{route('get.task', ['tarefa' =>0])}}";
+            route = route.replace('0', id);
+            var route_form = "{{route('update.task', ['tarefa' => 0])}}";
+            route_form = route_form.replace('0', id);
 
+            $.get(
+                route, 
+                {
+
+                },
+                function(c){
+                    if(c != false){
+                        console.log(c);
+
+                        $("#edit_modal").attr('action', route_form);
+                        $('#edit_task').val(c.task);
+                        $('#edit_description').val(c.description);
+                        $('#edit_dead_line').val(c.dead_line);
+                    }
+                }
+            );
         }
     </script>
 @stop
