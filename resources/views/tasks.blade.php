@@ -25,7 +25,7 @@
         <div class="card-body">
             @include('alerts')
             <h3 class="bg-info" align="center"> Tarefas para fazer: </h3>
-            @forelse ($projeto->tasks()->where('complete', 0)->where('dead_line', '>=', date("Y-m-d"))->get() as $tarefa) 
+            @forelse ($projeto->tasks()->where('complete', 0)->where('dead_line', '>=', date("Y-m-d"))->orWhere('dead_line', null)->get() as $tarefa) 
                 <li style="list-style: none;">                   
                     <div align="center">
                         <div class="icheck-primary d-inline ml-2">
@@ -151,7 +151,11 @@
                             $('#edit_dead_line').val(c.dead_line);
                         //Modal de informações da tarefa
                             $("#info_task").html("<b>Tarefa: </b>&nbsp;"+c.task);
-                            $('#info_dead_line').html("<b>Data Limite:</b>&nbsp;"+c.dead_line);
+                            if(c.dead_line==null){
+                                $('#info_dead_line').html("<b>Data Limite:</b>&nbsp;Não cadastrado");
+                            }else{
+                                $('#info_dead_line').html("<b>Data Limite:</b>&nbsp;"+c.dead_line);
+                            }
                             $('#info_description').html('<b>Descrição:</b> &nbsp;'+c.description);
                         //Modal de deleção de tarefa
                             $("#form_delete_task").attr('action', route_form_delete);
