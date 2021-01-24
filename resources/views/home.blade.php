@@ -37,7 +37,7 @@
                                 <a style="color: black; bold -webkit-text-stroke: 0.5px whitesmoke;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$loop->index}}">
                                     <p class="panel-title" style="padding: 5px"> <b style="font-size: 20px">{{$projeto->project}}</b> &nbsp;&nbsp;&nbsp;
                                         @if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get()) && count($projeto->tasks()->get()) != 0)
-                                            Finalizdo
+                                            Finalizado
                                         @else
                                             Em Andamento
                                         @endif

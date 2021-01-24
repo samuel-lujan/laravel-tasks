@@ -44,7 +44,7 @@
                 </li>
                 <br>
             @empty
-                <p align="center">Nenhuma tarefa pra Fazer</p>
+                <p align="center">Nenhuma tarefa para fazer</p>
             @endforelse
 
             <h3 class="bg-warning" align="center"> Tarefas atrasadas: </h3>
