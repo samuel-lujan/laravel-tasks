@@ -1,7 +1,7 @@
 <div class="modal" tabindex="-1" role="dialog" id="changeStatus">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header bg-danger">
+        <div class="modal-header bg-dark">
           <h5 class="modal-title">Mudar Status</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -16,7 +16,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-danger">Alterar</button>
+                <button type="submit" class="btn btn-dark">Alterar</button>
             </div>
         </form>
       </div>
