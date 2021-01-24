@@ -24,36 +24,57 @@
         <div class="card-body">
             @include('alerts')
             @if(count(auth()->user()->projects()->get())>0)
-                <table id="bike" class="table table-hover dataTable" role="grid">
-                    <thead align="center" class="sorting_asc bg-secondary">
-                        <th class="sorting_asc" colspan="1" aria-sort="ascending" aria-label="projetos">Projetos</th>
-                        <th>Data Limite</th>
-                        <!--<th>Processo</th>-->
-                        <th>Finalizado</th>
-                        <th>Ações</th>
-                    </thead>
-                    <tbody align="center">
-                        @foreach ($projetos as $projeto)
-                            <tr role="row" class="odd">
-                                <th>{{$projeto->project}}</th>
-                                <th>{{date('d/m/Y', strtotime($projeto->dead_line))}}</th>
-                                <!--<th>
-
-                                </th>-->
-                                <th>
-                                    @if($projeto->finished==0)
-                                        <input type="checkbox" name="finished" id="finished" onclick="return false;" disabled>
-                                    @else
-                                        <input type="checkbox" name="finished" id="finished" onclick="return false;" disabled checked>
-                                    @endif
-                                </th>
-                                <th>
-                                    <a href="{{route('projects', ['projeto'=>$projeto->id])}}"><button type="button" class="btn btn-info btn-sm" onclick="getbike({{$projeto->id}})"><i class="fas fa-pen"></i> Abrir</button></a>
-                                </th>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                @forelse ($projetos as $projeto)
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default" >
+                            <div class="panel-heading 
+                            @if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get()))
+                                bg-success
+                            @else
+                                bg-warning
+                            @endif
+                            ">
+                                <a style="color: black; bold -webkit-text-stroke: 0.5px whitesmoke;" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$loop->index}}">
+                                    <p class="panel-title" style="padding: 5px"> <b style="font-size: 20px">{{$projeto->project}}</b> &nbsp;&nbsp;&nbsp;
+                                        @if(count($projeto->tasks()->get()) == count($projeto->tasks()->where('complete', 1)->get()))
+                                            Finalizdo
+                                        @else
+                                            Em aberto
+                                        @endif
+                                    </p> 
+                                </a>
+                            </div>
+                            <div id="collapse{{$loop->index}}" class="panel-collapse collapse in bg-light">
+                                <div class="panel-body">
+                                    <a href="{{route('projects', ['projeto'=>$projeto->id])}}" class="float-right"><button type="button" class="btn btn-info btn-sm" onclick="getbike({{$projeto->id}})"><i class="fas fa-pen"></i> Abrir</button></a>
+                                    <br>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col">
+                                                <b>Data de Criação:</b> {{date('d/m/Y', strtotime($projeto->created_at))}} <br>
+                                                <b>Data limite</b> {{date('d/m/Y', strtotime($projeto->dead_line))}} <br>
+                                                <b>Descrição: </b> {{$projeto->description}} <br>
+                                                <b>Status: </b>
+                                                @if($projeto->finished == 0 )
+                                                    Em Andamento
+                                                @else
+                                                    Finalizado
+                                                @endif
+                                                <br>
+                                            </div>
+                                            <div class="col">
+                                                <b>Total de tarefas: </b> {{count($projeto->tasks()->get())}} <br>
+                                                <b>Tarefas Concluidas:</b> {{count($projeto->tasks()->where('complete', 1)->get())}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                @empty
+                @endforelse
             @else
                 <p>Adicione seu Primeiro Projeto</p>
             @endif
