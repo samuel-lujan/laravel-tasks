@@ -11,6 +11,7 @@
             @csrf
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <input type="hidden" name="_method" id="_method" value="PUT">
+            {{ method_field('PUT') }}
             <div class="modal-body">
                 <label for="projeto">Nome do Projeto*</label>
                 <input class="form-control" type="text" name="projeto" id="edit_projeto" required>

@@ -10,6 +10,7 @@
         <form action="" method="POST" id="form_delete">
             @csrf
             <meta name="csrf-token" content="{{ csrf_token() }}">
+            {{ method_field('DELETE') }}
             <input type="hidden" name="_method" id="_method" value="DELETE">
             <div class="modal-body">
                 <p>Tem certeza que deseja apagar <b>para sempre</b> esse projeto?</p>

@@ -11,6 +11,7 @@
             @csrf
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <input type="hidden" name="_method" id="_method" value="PUT">
+            {{ method_field('PUT') }}
             <div class="modal-body">
                 <p>Deseja Atualizar todas as tarefas como <b>Feita</b>?</p>
             </div>

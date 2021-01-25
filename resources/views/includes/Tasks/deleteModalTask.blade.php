@@ -11,6 +11,7 @@
             @csrf
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <input type="hidden" name="_method" id="_method" value="DELETE">
+            {{ method_field('DELETE') }}
             <div class="modal-body">
                 <p>Tem certeza que deseja apagar <b>para sempre</b> essa tarefa?</p>
             </div>

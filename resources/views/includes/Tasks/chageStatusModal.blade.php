@@ -11,6 +11,7 @@
             @csrf
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <input type="hidden" name="_method" id="_method" value="PUT">
+            {{ method_field('PUT') }}
             <div class="modal-body">
                 <p> Ao mudar o Status para <b>feito</b>, <b>não será</b> possível desfazer, nem editar nem apagar essa tarefa.</p>
             </div>
